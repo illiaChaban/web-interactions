@@ -14,7 +14,7 @@ import { useRef } from "~/utils/use-ref";
 export default function DesktopMenu() {
   const ref = useRef<HTMLDivElement>();
 
-  const hovered = atom<Menu | undefined>(menus[0]);
+  const hovered = atom<Menu | undefined>();
   const animatingOut = atom(false);
   const switchingMenu = atom(false);
   const tooltipPosition = atom<{ top: number; left: number; width: number }>({
