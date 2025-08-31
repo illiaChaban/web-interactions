@@ -7,8 +7,11 @@
     "start": "vinxi start"
   },
   "dependencies": {
+    "@illlia/css-styled": "^0.0.17",
+    "@illlia/ts-utils": "^0.0.30",
     "@solidjs/router": "^0.15.0",
     "@solidjs/start": "^1.1.0",
+    "lucide-solid": "^0.539.0",
     "solid-js": "^1.9.5",
     "vinxi": "^0.5.7"
   },
