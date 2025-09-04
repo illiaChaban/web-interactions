@@ -51,7 +51,7 @@ export default function DesktopMenu() {
           <ul>
             <li class="">
               <button
-                class="p-2 cursor-pointer hover:bg-neutral-200 rounded-md "
+                class="p-2 hover:bg-neutral-200 rounded-md "
                 onMouseEnter={(e) => {
                   clearTimeout(unhoveringTimeoutId);
                   clearTimeout(animatingOutTimeoutId);

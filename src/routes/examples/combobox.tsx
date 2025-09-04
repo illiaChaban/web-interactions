@@ -58,7 +58,7 @@ export default function Combobox() {
     </main>
   );
 }
-const Button = s.button`flex items-center gap-[0.5em] border-none cursor-pointer flex-nowrap whitespace-nowrap bg-neutral-50`;
+const Button = s.button`flex items-center gap-[0.5em] border-none flex-nowrap whitespace-nowrap bg-neutral-50`;
 
 const Container = s.div`p-4`;
 

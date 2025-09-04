@@ -27,6 +27,7 @@ export default function Nav() {
 }
 
 const components = [
-  { path: "/combobox", name: "Combobox" },
-  { path: "/desktop-menu", name: "Desktop menu" },
+  { path: "/components", name: "Components" },
+  { path: "/menu-patterns", name: "Menu patterns" },
+  { path: "/list-transitions", name: "List transitions" },
 ];

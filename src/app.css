@@ -45,3 +45,7 @@ body {
   background: rgb(var(--background-rgb));
   color: rgb(var(--foreground-rgb));
 }
+
+button {
+  @apply cursor-pointer;
+}
