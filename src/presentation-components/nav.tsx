@@ -12,7 +12,7 @@ export default function Nav() {
   //   console.log(location.pathname);
   // });
   return (
-    <nav class="bg-sky-800">
+    <nav class="bg-sky-800 flex items-center">
       <ul class="container flex items-center p-3 text-gray-200 gap-2">
         <For each={components}>
           {(component) => (
@@ -22,6 +22,19 @@ export default function Nav() {
           )}
         </For>
       </ul>
+      <button
+        class="btn"
+        onClick={() => {
+          const html = document.querySelector("html")!;
+          if (html.hasAttribute("data-theme")) {
+            html.removeAttribute("data-theme");
+          } else {
+            html.setAttribute("data-theme", "light");
+          }
+        }}
+      >
+        theme
+      </button>
     </nav>
   );
 }

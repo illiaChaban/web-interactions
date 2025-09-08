@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@plugin "daisyui" {
+  themes: dark --default, light; /* , dark --prefersdark, dark night dim; */
+}
 
 @theme {
   --animate-fadeIn: fadeIn 0.2s ease-in-out forwards;
@@ -22,6 +25,10 @@
       opacity: 0;
     }
   }
+
+  /* https://easings.net/# */
+  --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-in-cubic: cubic-bezier(0.32, 0, 0.67, 0);
 }
 
 @utility seo {
@@ -29,10 +36,10 @@
   height: 0px;
 }
 
-:root {
+/* :root {
   --background-rgb: 214, 219, 220;
   --foreground-rgb: 0, 0, 0;
-}
+} */
 
 /* @media (prefers-color-scheme: dark) {
   :root {
@@ -41,10 +48,10 @@
   }
 } */
 
-body {
+/* body {
   background: rgb(var(--background-rgb));
   color: rgb(var(--foreground-rgb));
-}
+} */
 
 button {
   @apply cursor-pointer;
