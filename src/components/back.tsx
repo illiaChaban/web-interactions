@@ -1,16 +1,17 @@
 import { A, useNavigate } from "@solidjs/router";
-import { ChevronLeft } from "lucide-solid";
+import ChevronLeft from "lucide-solid/icons/chevron-left";
 import { s } from "~/utils/styles";
 import type { JSX } from "solid-js";
-import { DOMElement } from "solid-js/jsx-runtime";
+import {
+  viewTransition,
+  ViewTransitionAnimation,
+} from "~/utils/view-transition";
 
-export const BackButton = (p: {
+export const Back = (p: {
   href: string;
   class?: string;
   children?: JSX.Element;
-  onClick?: (
-    e: MouseEvent & { currentTarget: HTMLAnchorElement; target: DOMElement }
-  ) => void;
+  viewTransition?: ViewTransitionAnimation;
 }) => {
   const navigate = useNavigate();
   return (
@@ -18,9 +19,13 @@ export const BackButton = (p: {
       class={s`btn btn-small btn-circle btn-soft my-2  ${p.class}`}
       href={p.href}
       onClick={(e) => {
-        if (p.onClick) return p.onClick(e);
         e.preventDefault();
-        navigate(-1);
+
+        if (p.viewTransition) {
+          viewTransition(p.viewTransition, () => navigate(-1));
+        } else {
+          navigate(-1);
+        }
       }}
     >
       {p.children ?? <ChevronLeft />}

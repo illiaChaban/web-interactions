@@ -21,7 +21,8 @@ export default function SlideIn() {
                     href={href}
                     onClick={(e) => {
                       e.preventDefault();
-                      viewTransition("slide-in", () => navigate(href));
+                      navigate(href);
+                      // viewTransition("slide-in", () => navigate(href));
                     }}
                   >
                     <CardContainer class="">card {i + 1}</CardContainer>

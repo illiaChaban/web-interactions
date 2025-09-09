@@ -14,6 +14,11 @@ export default function Components() {
           View transition api effectively takes a photo of the old state and
           animates it out. This can lead to the old page being visibly cut off
           if shrunk (by using CSS scale).
+          <br />
+          TODO:
+          <br />
+          - figure out black background <br />
+          - figure out how to save scroll position <br />
         </p>
         <IFrame src="/examples/slide-in" />
       </div>

@@ -1,4 +1,5 @@
-import { Menu, ChevronLeft } from "lucide-solid";
+import ChevronLeft from "lucide-solid/icons/chevron-left";
+import Menu from "lucide-solid/icons/menu";
 import { For } from "solid-js";
 import { Page } from "~/components/page";
 import { atom } from "~/utils/atom";
