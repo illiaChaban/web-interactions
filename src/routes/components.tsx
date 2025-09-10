@@ -1,4 +1,5 @@
 import type { JSX } from "solid-js";
+import { IFrame } from "~/components/iframe";
 import Nav from "~/presentation-components/nav";
 
 export default function Components() {
@@ -7,10 +8,7 @@ export default function Components() {
       <Nav />
       <h1 class="text-4xl font-bold p-4">Airbnb combobox</h1>
       <div class="flex-1 p-4">
-        <iframe
-          class="w-full h-full border border-neutral-200 rounded-xl"
-          src="/examples/combobox"
-        />
+        <IFrame src="/examples/combobox" />
       </div>
     </div>
   );

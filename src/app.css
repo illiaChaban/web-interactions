@@ -53,11 +53,16 @@
   color: rgb(var(--foreground-rgb));
 } */
 
-@utility dotted {
-  background-image: radial-gradient(#ffffff26 0.5px, transparent 1px);
+@utility bg-dotted {
+  --color: --alpha(theme("colors.white") / 15%);
+  background-image: radial-gradient(var(--color) 0.5px, transparent 1px);
   background-position: 0 0;
   background-repeat: round, space;
   background-size: 12px 12px;
+
+  :root[data-theme="light"] & {
+    --color: --alpha(theme("colors.black") / 25%);
+  }
 }
 
 button {

@@ -1,3 +1,5 @@
+export * from "./image-placeholder";
+
 export const ChevronDown = (p: { class?: string }) => {
   return (
     <svg

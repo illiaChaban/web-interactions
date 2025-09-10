@@ -20,7 +20,7 @@ export default function Combobox() {
     initial() ? "" : s`animate-fadeIn [animation-delay:100ms] opacity-0`;
 
   return (
-    <main class="text-center mx-auto p-4 w-screen h-screen bg-neutral-300 flex justify-center items-center">
+    <main class="text-center mx-auto p-4 h-screen  text-black flex justify-center items-center bg-dotted">
       <AnimatedContainer>
         {expanded() ? (
           <ul class={s`flex flex-col p-2 ${fadeInCss()}`}>

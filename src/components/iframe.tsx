@@ -52,7 +52,7 @@ export const IFrame = (p: { src: string }) => {
         </div>
         <div class="justify-self-end"></div>
       </header>
-      <div class="tabs tabs-box bg-base-300 flex-1 min-h-[800px] overflow-hidden flex flex-col dotted">
+      <div class="tabs tabs-box bg-base-300 flex-1 min-h-[800px] overflow-hidden flex flex-col bg-dotted">
         <div
           class="relative mx-auto w-full lg:data-mobile:w-95 transition-[width] h-full inset-shadow-sm tab tab-active p-[2px] flex-1 flex flex-col"
           data-mobile={viewPort() === "mobile" ? true : undefined}

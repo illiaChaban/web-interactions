@@ -45,7 +45,11 @@ export default function DesktopMenu() {
   };
 
   return (
-    <div ref={ref} class="p-4 flex gap-6 w-full justify-center bg-neutral-50">
+    <div
+      ref={ref}
+      data-theme="light"
+      class="p-4 flex gap-6 w-full justify-center bg-neutral-50"
+    >
       <For each={menus}>
         {(menu) => (
           <ul>

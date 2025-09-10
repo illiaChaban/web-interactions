@@ -13,7 +13,7 @@ export default function DesktopMenuSlideLeft() {
   const activeMenu = atom(menus[0]);
 
   return (
-    <Page>
+    <Page data-theme="light">
       <div
         class={s`inset-0 relative bg-slate-50 h-full grid overflow-clip ${
           expanded() ? "grid-cols-[200px_auto]" : "grid-cols-[32px_auto]"
