@@ -29,6 +29,7 @@
   /* https://easings.net/# */
   --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
   --ease-in-cubic: cubic-bezier(0.32, 0, 0.67, 0);
+  --ease-out-ios: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 @utility seo {
@@ -65,6 +66,40 @@
   }
 }
 
+@utility no-scrollbar {
+  ::-webkit-scrollbar {
+    display: none; /** Safari & Chrome */
+  }
+  scrollbar-width: none; /** Firefox */
+  -ms-overflow-style: none; /** IE & Edge */
+}
+
+@utility fade-out-bar {
+  @apply bg-base-100 pointer-events-none sticky bottom-0 flex [mask-image:linear-gradient(transparent,#000000)];
+  /** -mt-6 h-16 */
+}
+
 button {
   @apply cursor-pointer;
+}
+
+/* aliases */
+@utility top {
+  top: 0;
+}
+
+@utility bottom {
+  bottom: 0;
+}
+
+@utility left {
+  left: 0;
+}
+
+@utility right {
+  right: 0;
+}
+
+@utility inset {
+  inset: 0;
 }

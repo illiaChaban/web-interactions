@@ -20,15 +20,3 @@ export default function SlideInDetails() {
     </>
   );
 }
-
-export const Layout = (p: { children: JSX.Element }) => {
-  return (
-    <Page>
-      <Content>
-        <ExitStandalone href="/list-transitions" />
-        <Back href="/examples/slide-in" viewTransition="slide-out" />
-        {p.children}
-      </Content>
-    </Page>
-  );
-};

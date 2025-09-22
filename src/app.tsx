@@ -1,7 +1,7 @@
 import { Route, Router } from "@solidjs/router";
 import { Component, lazy, onCleanup, onMount, Suspense } from "solid-js";
 import "./app.css";
-import { Back } from "./components/back";
+import { Back, BackFromState } from "./components/back";
 import { PageExampleLayout } from "./components/page";
 import { ExitStandalone } from "./components/iframe";
 import { onEvent } from "@illlia/ts-utils";
@@ -30,6 +30,15 @@ const DesktopMenuSlideLeft = withSuspence(
   lazy(() => import("./routes/examples/desktop-menu-slide-left"))
 );
 
+const RubberBand = withSuspence(
+  lazy(() => import("./routes/examples/rubber-band"))
+);
+const ListSwipe = withSuspence(
+  lazy(() => import("./routes/examples/list-swipe"))
+);
+
+const NotFound = withSuspence(lazy(() => import("./routes/[...404]")));
+
 export default function App() {
   return (
     <Router
@@ -43,6 +52,7 @@ export default function App() {
       <Route path="/list-transitions" component={ListTransitions} />
       <Route path="/components" component={Components} />
       <Route path="/menu-patterns" component={MenuPatterns} />
+      <Route path="/rubber-band" component={RubberBand} />
       <Route path="/examples">
         <Route path="/slide-in">
           <Route
@@ -57,7 +67,7 @@ export default function App() {
             path="/:id"
             component={() => (
               <PageExampleLayout href="/list-transitions">
-                <Back href="/examples/slide-in" viewTransition="slide-out" />
+                <BackFromState href="/examples/slide-in" />
                 <SlideInDetails />
               </PageExampleLayout>
             )}
@@ -79,7 +89,10 @@ export default function App() {
           path="/desktop-menu-slide-left"
           component={DesktopMenuSlideLeft}
         />
+        <Route path="/rubber-band" component={RubberBand} />
+        <Route path="/list-swipe" component={ListSwipe} />
       </Route>
+      <Route path="/*" component={() => <NotFound />} />
     </Router>
   );
 }

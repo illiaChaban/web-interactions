@@ -4,9 +4,8 @@ export const viewTransition = (
 ) => {
   if (!document.startViewTransition) return callback();
 
-  const style = (
-    <style>{viewTransitions[type]}</style>
-  ) as any as HTMLStyleElement;
+  const style = document.createElement("style");
+  style.innerHTML = viewTransitions[type];
 
   document.head.appendChild(style);
 
@@ -20,7 +19,7 @@ export const viewTransition = (
   });
 };
 
-const slideInStyles = `
+const SLIDE_IN = `
   @keyframes slide-in {
     from {
       translate: 100vw 0;
@@ -57,7 +56,7 @@ const slideInStyles = `
   }
 `;
 
-const slideOutStyles = `
+const SLIDE_OUT = `
   @keyframes slide-out {
     to {
       translate: 100vw 0;
@@ -91,9 +90,95 @@ const slideOutStyles = `
   }
 `;
 
+const SLIDE_IN_2_SHARED = `
+  :root {
+    --ease-out-ios: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+    &::view-transition-old(root),
+    &::view-transition-new(root) {
+      animation-duration: 0.35s;
+      animation-timing-function: var(--ease-out-ios);
+    }
+  }
+
+  @media (prefers-reduced-motion) {
+    :root {
+      &::view-transition-old(root),
+      &::view-transition-new(root) {
+        animation-duration: 0s;
+        animation-name: none !important;
+      }
+    }
+  }
+`;
+
+const SLIDE_IN_2 = `
+  ${SLIDE_IN_2_SHARED}
+  @keyframes slide-in {
+    from {
+      translate: 100vw 0;
+    }
+  }
+
+  @keyframes to-left {
+    to {
+      translate: -30vw 0;
+      filter: brightness(0.7);
+    }
+  }
+
+  :root {
+    &::view-transition-old(root) {
+      animation-name: to-left;
+    }
+
+    &::view-transition-new(root) {
+      animation-name: slide-in;
+    }
+  }
+`;
+
+const SLIDE_OUT_2 = `
+  ${SLIDE_IN_2_SHARED}
+
+  @keyframes slide-out {
+    to {
+      translate: 100vw 0;
+    }
+  }
+
+  @keyframes from-left {
+    from {
+      translate: -30vw 0;
+      filter: brightness(0.7);
+    }
+  }
+
+  :root {
+    &::view-transition-new(root) {
+      animation-name: from-left;
+    }
+
+    &::view-transition-old(root) {
+      animation-name: slide-out;
+      z-index: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion) {
+    :root {
+      &::view-transition-old(root) {
+        z-index: auto;
+      }
+    }
+  }
+`;
+
 const viewTransitions = {
-  "slide-in": slideInStyles,
-  "slide-out": slideOutStyles,
+  "slide-in": SLIDE_IN,
+  "slide-out": SLIDE_OUT,
+  "slide-in-2": SLIDE_IN_2,
+  "slide-out-2": SLIDE_OUT_2,
 };
 
 export type ViewTransitionAnimation = keyof typeof viewTransitions;
