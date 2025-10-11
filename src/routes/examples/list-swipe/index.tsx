@@ -19,7 +19,7 @@ export default function ListSwipe() {
 
           <For each={texts}>
             {(text) => (
-              <li class="p-4 bg-[linear-gradient(to_top,#242e3bb5,transparent_30px)]">
+              <li class="px-4 py-3 bg-[linear-gradient(to_top,#242e3bb5,transparent_30px)]">
                 {text}
               </li>
             )}
@@ -40,8 +40,6 @@ const Swipable = (p: { class?: string }) => {
   const width = atom(0);
   const actionWidth = () => width() * 0.2;
 
-  const isUserScrolling = atom(false);
-
   const leftActive = atom(false);
 
   onMount(() => {
@@ -57,12 +55,35 @@ const Swipable = (p: { class?: string }) => {
 
     let startX = 0;
 
+    const [handleScroll, reset] = createScrollAnimation(() => {}, {
+      /** large debounce time since we'll handle touchend manually */
+      debounceTime: 1000,
+    });
+
     // Track when user starts scrolling
     onCleanup(
       onEvent(el, "touchstart", (e) => {
-        isUserScrolling(true);
         console.log("touchstart");
         startX = e.touches[0].clientX;
+        handleScroll();
+      })
+    );
+
+    onCleanup(
+      onEvent(el, "touchend", () => {
+        console.log("touchend");
+
+        reset();
+
+        requestAnimationFrame(() => {
+          el.style.transition = "transform 0.2s ease-in-out";
+          el.style.transform = "translateX(0)";
+        });
+
+        // todo: need cleanup here?
+        onEvent(el, "transitionend", () => {
+          el.style.transition = "none";
+        });
       })
     );
 
@@ -112,11 +133,6 @@ const Swipable = (p: { class?: string }) => {
       return direction * (threshold + rubber);
     };
 
-    // const [handleScroll, reset] = createScrollAnimation(() => {}, {
-    //   /** large debounce time since we'll handle touchend manually */
-    //   debounceTime: 1000,
-    // });
-
     onCleanup(
       onEvent(
         el,
@@ -156,39 +172,6 @@ const Swipable = (p: { class?: string }) => {
         },
         { passive: false }
       )
-    );
-
-    onCleanup(
-      onEvent(el, "touchend", () => {
-        isUserScrolling(false);
-        console.log("touchend");
-
-        requestAnimationFrame(() => {
-          el.style.transition = "transform 0.2s ease-in-out";
-          el.style.transform = "translateX(0)";
-        });
-
-        // todo: need cleanup here?
-        onEvent(el, "transitionend", () => {
-          el.style.transition = "none";
-        });
-        // const threshold = actionWidth() / 4;
-
-        // // actionWidth - scrol < actionWidth - threshold
-        // // - scroll < - threshold
-        // // scroll > threshold
-        // const isLeftActive = scroll() < threshold;
-        // console.log("left active", {
-        //   is: isLeftActive,
-        //   // change: scroll() - actionWidth(),
-        //   scroll: scroll(),
-        //   actionWidth: actionWidth(),
-        // });
-        // if (isLeftActive) {
-        //   leftActive(true);
-        //   // complete
-        // }
-      })
     );
   });
   return (

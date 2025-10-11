@@ -45,7 +45,7 @@ export const createScrollAnimation = (
 
   const handleScroll = () => {
     const isFirstFrame = !lastScrollEventTime;
-    lastScrollEventTime = e.timeStamp;
+    lastScrollEventTime = performance.now();
 
     if (isFirstFrame) animate();
 
