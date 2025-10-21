@@ -32,6 +32,18 @@
   --ease-out-ios: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
+/* padding values for content */
+@theme {
+  --spacing-content: --spacing(4);
+}
+
+@media (min-width: theme(breakpoint.md)) {
+  :root,
+  :host {
+    --spacing-content: --spacing(6);
+  }
+}
+
 @utility seo {
   width: 0px; /* hello world */
   height: 0px;
@@ -102,4 +114,13 @@ button {
 
 @utility inset {
   inset: 0;
+}
+
+@utility max-content {
+  @apply max-w-3xl;
+}
+
+/* daisy */
+@utility btn {
+  @apply rounded-md;
 }

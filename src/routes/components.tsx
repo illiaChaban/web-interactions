@@ -18,6 +18,11 @@ export default function Components() {
       <div class="flex-1 p-4">
         <IFrame src="/examples/combobox" />
       </div>
+
+      <h2 class="text-2xl font-bold p-4">Sticky header</h2>
+      <div class="flex-1 p-4">
+        <IFrame src="/examples/sticky-header" />
+      </div>
     </div>
   );
 }

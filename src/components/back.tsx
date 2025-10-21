@@ -2,10 +2,7 @@ import { A, useLocation, useNavigate, useParams } from "@solidjs/router";
 import ChevronLeft from "lucide-solid/icons/chevron-left";
 import { s } from "~/utils/styles";
 import type { JSX } from "solid-js";
-import {
-  viewTransition,
-  ViewTransitionAnimation,
-} from "~/utils/view-transition";
+import { viewTransition, ViewTransitionAnimation } from "~/utils/view-transition";
 import { overrideLinkClick } from "~/utils/override-link-click";
 
 export const Back = (p: {
@@ -17,7 +14,7 @@ export const Back = (p: {
   const navigate = useNavigate();
   return (
     <A
-      class={s`btn btn-small btn-circle btn-soft my-2  ${p.class}`}
+      class={s`btn btn-lg btn-square btn-ghost ${p.class}`}
       href={p.href}
       onClick={overrideLinkClick(() => {
         if (p.viewTransition) {

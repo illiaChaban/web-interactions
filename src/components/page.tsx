@@ -8,7 +8,7 @@ import { ExitStandalone } from "~/components/iframe";
  * scroll-padding-block: 16px */
 export const Page = s.div`fixed overflow-auto inset-0 contain-strict`;
 
-export const Content = s.div`p-4 max-w-3xl mx-auto`;
+export const Content = s.div`p-content max-content mx-auto`;
 
 /** page example layout */
 export const PageExampleLayout = (p: {

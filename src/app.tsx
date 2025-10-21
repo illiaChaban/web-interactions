@@ -7,12 +7,8 @@ import { ExitStandalone } from "./components/iframe";
 import { onEvent } from "@illlia/ts-utils";
 import { FileRoutes } from "@solidjs/start/router";
 
-const SlideIn = withSuspence(
-  lazy(() => import("./routes-special/slide-in/index"))
-);
-const SlideInDetails = withSuspence(
-  lazy(() => import("./routes-special/slide-in/[id]"))
-);
+const SlideIn = withSuspence(lazy(() => import("./routes-special/slide-in/index")));
+const SlideInDetails = withSuspence(lazy(() => import("./routes-special/slide-in/[id]")));
 
 export default function App() {
   return (
@@ -67,13 +63,13 @@ const ScrollRestoration = () => {
     onCleanup(
       onEvent(window, "pushstate", () => {
         console.debug("pushstate");
-      })
+      }),
     );
 
     onCleanup(
       onEvent(window, "popstate", () => {
         console.debug("popstate");
-      })
+      }),
     );
   });
   return null;

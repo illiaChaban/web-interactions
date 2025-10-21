@@ -4,15 +4,16 @@
   "scripts": {
     "dev": "vinxi dev",
     "build": "vinxi build",
-    "start": "vinxi start"
+    "start": "vinxi start",
+    "upgrade": "pnpm "
   },
   "dependencies": {
     "@illlia/css-styled": "^0.0.17",
     "@illlia/ts-utils": "^0.0.31",
     "@solidjs/meta": "^0.29.4",
-    "lucide-solid": "^0.539.0",
     "@solidjs/router": "^0.15.3",
-    "@solidjs/start": "^1.1.7",
+    "@solidjs/start": "^1.2.0",
+    "lucide-solid": "^0.539.0",
     "solid-js": "^1.9.9",
     "vinxi": "^0.5.8"
   },
