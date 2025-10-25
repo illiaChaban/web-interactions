@@ -121,6 +121,8 @@ button {
 }
 
 /* daisy */
-@utility btn {
-  @apply rounded-md;
+@layer components {
+  .btn {
+    @apply rounded-md;
+  }
 }

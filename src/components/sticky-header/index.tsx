@@ -1,12 +1,14 @@
 import { _, call, clamp, debounce, onEvent } from "@illlia/ts-utils";
-import { JSX, onCleanup, onMount } from "solid-js";
+import { createEffect, JSX, onCleanup, onMount } from "solid-js";
 import { createScrollAnimation } from "~/utils/animate-scroll";
+import { atom } from "~/utils/atom";
+import { trackFps } from "~/utils/debug/track-fps";
 import { s } from "~/utils/styles";
 import { useRef } from "~/utils/use-ref";
 
 export function StickyHeader(p: {
   children: JSX.Element;
-  /** defaults to window */
+  /** scroll container; defaults to window */
   getContainer?: () => HTMLElement | Window;
   /** left button */
   left?: JSX.Element;
@@ -17,6 +19,8 @@ export function StickyHeader(p: {
   const collapsedTitleRef = useRef();
   const expandedTitleRef = useRef();
   const expandedTitleContainerRef = useRef();
+
+  const isCollapsed = atom(false);
 
   onMount(() => {
     const container = p.getContainer?.() ?? window;
@@ -103,7 +107,8 @@ export function StickyHeader(p: {
       expandedTitle.style.pointerEvents = opacity < 0.75 ? "none" : "auto";
       expandedTitle.style.opacity = opacity.toString();
       collapsedTitle.style.opacity = (1 - opacity).toString();
-      // trackFps();
+
+      isCollapsed(opacity === 0);
     };
 
     // initial animation in case scrollTop is not 0
@@ -134,21 +139,26 @@ export function StickyHeader(p: {
         class={s`
           bg-base-100
           sticky top 
-          flex items-center gap-1
-          border-b border-base-200
-          px-content max-content mx-auto
+          border-b ${isCollapsed() ? "border-base-300" : "border-transparent"}
         `}
       >
-        {/* pipe is required due to solid start bug with hydration @issue https://github.com/solidjs/solid-start/issues/1993 */}
-        {_(p.left, (left) => left && <div class="-ml-3">{left}</div>)}
         <div
-          ref={collapsedTitleRef}
-          class="flex-1 whitespace-nowrap text-ellipsis overflow-hidden opacity-0"
+          class={s`
+            flex items-center gap-1
+            px-content max-content mx-auto
+          `}
         >
-          {p.children}
+          {/* pipe is required due to solid start bug with hydration @issue https://github.com/solidjs/solid-start/issues/1993 */}
+          {_(p.left, (left) => left && <div class="-ml-3">{left}</div>)}
+          <div
+            ref={collapsedTitleRef}
+            class="flex-1 whitespace-nowrap text-ellipsis overflow-hidden opacity-0"
+          >
+            {p.children}
+          </div>
+          {/* pipe is required due to solid start bug with hydration @issue https://github.com/solidjs/solid-start/issues/1993 */}
+          {_(p.right, (right) => right && <div class="flex gap-1 -mr-3">{right}</div>)}
         </div>
-        {/* pipe is required due to solid start bug with hydration @issue https://github.com/solidjs/solid-start/issues/1993 */}
-        {_(p.right, (right) => right && <div class="flex gap-1 -mr-3">{right}</div>)}
       </header>
       <div
         ref={expandedTitleContainerRef}

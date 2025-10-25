@@ -11,10 +11,7 @@ export const Page = s.div`fixed overflow-auto inset-0 contain-strict`;
 export const Content = s.div`p-content max-content mx-auto`;
 
 /** page example layout */
-export const PageExampleLayout = (p: {
-  children: JSX.Element;
-  href: string;
-}) => {
+export const PageExampleLayout = (p: { children: JSX.Element; href: string }) => {
   return (
     <Page>
       <Content>
