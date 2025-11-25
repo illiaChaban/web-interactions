@@ -31,95 +31,426 @@ enum EText {
   Quotes = "Quotes",
 }
 
-const Clear = (p: { nodes: Node[] }) => {
-  return (
-    <Content class="bg-[rgb(25_30_37)] text-[#ebf9ff] py-0  [--line-color:#3b4046]">
-      <h1 class="text-5xl mb-4 pt-4">Clear</h1>
-      <ul class="-mx-4 overflow-x-hidden">
-        <For each={p.nodes}>
-          {(n) => (
-            <li class="relative px-4 py-2 /[box-shadow:0px_-15px_35px_rgb(0_0_0/5%)]">
-              <div class="inset absolute bg-[linear-gradient(to_top,#00000014,transparent_30px)] pointer-events-none" />
-              {n.text}
-              <ClearChildren nodes={n.children} />
-            </li>
-          )}
-        </For>
-      </ul>
-    </Content>
-  );
-};
+const Clear = (() => {
+  return (p: { nodes: Node[] }) => {
+    return (
+      <Content class="bg-[rgb(25_30_37)] text-[#ebf9ff] py-0  [--line-color:#3b4046]">
+        <h1 class="text-5xl mb-4 pt-4">Clear</h1>
+        <ul class="-mx-4 overflow-x-hidden">
+          <For each={p.nodes}>
+            {(n) => (
+              <li class="relative px-4 py-2 /[box-shadow:0px_-15px_35px_rgb(0_0_0/5%)]">
+                <div class="inset absolute bg-[linear-gradient(to_top,#00000014,transparent_30px)] pointer-events-none" />
+                {n.text}
+                <ClearChildren nodes={n.children} />
+              </li>
+            )}
+          </For>
+        </ul>
+      </Content>
+    );
+  };
 
-const ClearChildren = (p: { nodes: Node[] }) => {
-  return (
-    <>
-      {p.nodes.length > 0 && (
-        <>
-          {/* <div class="absolute w-[1px] h-[calc(100%-48px)] bg-(--line-color)/50" /> */}
-          <ul class="list-outside pl-4 pt-1 -mb-1">
-            <For each={p.nodes}>
-              {(n) => (
-                <li class="relative py-1">
-                  <div class="absolute left-[-19.5px] text-(--line-color)">•</div>
-                  {n.text}
-                  <ClearChildren nodes={n.children} />
-                </li>
+  function ClearChildren(p: { nodes: Node[] }) {
+    return (
+      <>
+        {p.nodes.length > 0 && (
+          <>
+            {/* <div class="absolute w-[1px] h-[calc(100%-48px)] bg-(--line-color)/50" /> */}
+            <ul class="list-outside pl-4 pt-1 -mb-1">
+              <For each={p.nodes}>
+                {(n) => (
+                  <li class="relative py-1">
+                    <div class="absolute left-[-19.5px] text-(--line-color)">•</div>
+                    {n.text}
+                    <ClearChildren nodes={n.children} />
+                  </li>
+                )}
+              </For>
+            </ul>
+          </>
+        )}
+      </>
+    );
+  }
+})();
+
+/** add box  */
+const Clear2 = (() => {
+  return (p: { nodes: Node[] }) => {
+    return (
+      <Content class="bg-[rgb(25_30_37)] text-[#ebf9ff] py-0  [--line-color:#3b4046]">
+        <h1 class="text-5xl mb-4 pt-4">Clear</h1>
+        <Clear2Children nodes={p.nodes} level={0} class="-mx-4" />
+      </Content>
+    );
+  };
+
+  function Clear2Children(p: { nodes: Node[]; class?: string; level: number }) {
+    return (
+      <>
+        {p.nodes.length > 0 && (
+          <>
+            <ul class={s(" mt-2", p.class)}>
+              <For each={p.nodes}>
+                {(n, i) => (
+                  <li
+                    class={s(
+                      "relative px-4 py-2 box-border /[box-shadow:0px_-15px_35px_rgb(0_0_0/5%)]",
+                      p.level > 0 && "bg-white/5",
+                      p.level > 0 && i() === 0 && "rounded-tl-lg",
+                      p.level > 0 && i() === p.nodes.length - 1 && "rounded-bl-lg",
+                      p.level > 0 && "-mr-4",
+                    )}
+                  >
+                    {!n.children.length && i() !== p.nodes.length - 1 && (
+                      <div class="inset absolute bg-[linear-gradient(to_top,#00000014,transparent_30px)] pointer-events-none" />
+                    )}
+                    {n.text}
+                    <Clear2Children nodes={n.children} level={p.level + 1} />
+                  </li>
+                )}
+              </For>
+            </ul>
+          </>
+        )}
+      </>
+    );
+  }
+})();
+
+/** add box-shadow */
+const Clear3 = (() => {
+  return (p: { nodes: Node[] }) => {
+    return (
+      <Content class="bg-[rgb(25_30_37)] text-[#ebf9ff] py-0  [--line-color:#3b4046]">
+        <h1 class="text-5xl mb-4 pt-4">Clear</h1>
+        <Clear3Children nodes={p.nodes} level={0} class="-mx-4" />
+      </Content>
+    );
+  };
+
+  function Clear3Children(p: { nodes: Node[]; class?: string; level: number }) {
+    return (
+      <>
+        {p.nodes.length > 0 && (
+          <>
+            <ul
+              class={s(
+                " mt-2",
+                p.level > 0 && "[box-shadow:-10px_0px_20px_rgb(0_0_0/22%))]",
+                p.class,
               )}
-            </For>
-          </ul>
-        </>
-      )}
-    </>
-  );
-};
+            >
+              <For each={p.nodes}>
+                {(n, i) => (
+                  <li
+                    class={s(
+                      "relative pl-4 py-2 box-border",
+                      p.level > 0 && "bg-white/4",
+                      p.level > 0 && i() === 0 && "rounded-tl-xl",
+                      p.level > 0 && i() === p.nodes.length - 1 && "rounded-bl-xl",
+                      // p.level > 0 && "-mr-4",
+                    )}
+                  >
+                    {!n.children.length && i() !== p.nodes.length - 1 && (
+                      <div class="inset absolute bg-[linear-gradient(to_top,#00000014,transparent_30px)] pointer-events-none" />
+                    )}
+                    <div class="pr-4">{n.text}</div>
+                    <Clear3Children nodes={n.children} level={p.level + 1} />
+                  </li>
+                )}
+              </For>
+            </ul>
+          </>
+        )}
+      </>
+    );
+  }
+})();
 
-const Clear2 = (p: { nodes: Node[] }) => {
-  return (
-    <Content class="bg-[rgb(25_30_37)] text-[#ebf9ff] py-0  [--line-color:#3b4046] font-light">
-      <h1 class="text-5xl mb-4 pt-4">Clear</h1>
-      <ClearChildren nodes={p.nodes} />
-    </Content>
-  );
-};
+/** add border */
+const Clear4 = (() => {
+  return (p: { nodes: Node[] }) => {
+    return (
+      <Content class="bg-[rgb(25_30_37)] text-[#ebf9ff] py-0  [--line-color:#3b4046]">
+        <h1 class="text-5xl mb-4 pt-4">Clear</h1>
+        <Children nodes={p.nodes} level={0} class="-mx-4" />
+      </Content>
+    );
+  };
 
-const Apple = (p: { nodes: Node[] }) => {
-  return (
-    <Content class="bg-[#1c1c1e] min-h-full text-[#dcdcdc] py-0 font-light">
-      <h1 class="text-5xl mb-4 pt-4">Apple</h1>
-      <AppleChildren
-        nodes={p.nodes}
-        // first level offset
-        class="-ml-2"
-      />
-    </Content>
-  );
-};
-
-const AppleChildren = (p: { nodes: Node[]; class?: string }) => {
-  return (
-    <>
-      {p.nodes.length > 0 && (
-        <>
-          <ul class={s("list-outside pl-2", p.class)}>
-            <For each={p.nodes}>
-              {(n) => (
-                <li class="relative py-0 pl-3">
-                  <div class="absolute left-0">-</div>
-                  {n.text}
-                  <AppleChildren nodes={n.children} />
-                </li>
+  function Children(p: { nodes: Node[]; class?: string; level: number }) {
+    return (
+      <>
+        {p.nodes.length > 0 && (
+          <>
+            <ul
+              class={s(
+                " mt-2",
+                p.level > 0 &&
+                  "[box-shadow:-10px_0px_20px_rgb(0_0_0/22%))] border border-[#ffffff1a] rounded-l-xl",
+                p.class,
               )}
-            </For>
-          </ul>
-        </>
-      )}
-    </>
-  );
-};
+            >
+              <For each={p.nodes}>
+                {(n, i) => (
+                  <li
+                    class={s(
+                      "relative pl-4 py-2 box-border",
+                      p.level > 0 && "bg-white/4",
+                      p.level > 0 && i() === 0 && "rounded-tl-xl",
+                      p.level > 0 && i() === p.nodes.length - 1 && "rounded-bl-xl",
+                      // p.level > 0 && "-mr-4",
+                    )}
+                  >
+                    {!n.children.length && i() !== p.nodes.length - 1 && (
+                      <div class="inset absolute bg-[linear-gradient(to_top,#00000014,transparent_30px)] pointer-events-none" />
+                    )}
+                    <div class="pr-4">{n.text}</div>
+                    <Children nodes={n.children} level={p.level + 1} />
+                  </li>
+                )}
+              </For>
+            </ul>
+          </>
+        )}
+      </>
+    );
+  }
+})();
+
+/** remove background & light font weight */
+const Clear5 = (() => {
+  return (p: { nodes: Node[] }) => {
+    return (
+      <Content class="bg-[rgb(25_30_37)] text-[#ebf9ff] py-0  [--line-color:#3b4046]">
+        <h1 class="text-5xl mb-4 pt-4">Clear</h1>
+        <Children nodes={p.nodes} level={0} class="-mx-4 font-light" />
+      </Content>
+    );
+  };
+
+  function Children(p: { nodes: Node[]; class?: string; level: number }) {
+    return (
+      <>
+        {p.nodes.length > 0 && (
+          <>
+            <ul
+              class={s(
+                " mt-2",
+                p.level > 0 &&
+                  "[box-shadow:-10px_0px_20px_rgb(0_0_0/22%))] border border-r-0 border-[#ffffff0f] rounded-l-xl",
+                p.class,
+              )}
+            >
+              <For each={p.nodes}>
+                {(n, i) => (
+                  <li
+                    class={s(
+                      "relative pl-4 py-2 box-border",
+                      // p.level > 0 && "bg-white/2",
+                      // p.level > 0 && i() === 0 && "rounded-tl-xl",
+                      // p.level > 0 && i() === p.nodes.length - 1 && "rounded-bl-xl",
+                      // p.level > 0 && "-mr-4",
+                    )}
+                  >
+                    {!n.children.length && i() !== p.nodes.length - 1 && (
+                      <div class="inset absolute bg-[linear-gradient(to_top,#00000014,transparent_30px)] pointer-events-none" />
+                    )}
+                    <div class="pr-4">{n.text}</div>
+                    <Children nodes={n.children} level={p.level + 1} />
+                  </li>
+                )}
+              </For>
+            </ul>
+          </>
+        )}
+      </>
+    );
+  }
+})();
+
+const Note = (() => {
+  return (p: { nodes: Node[] }) => {
+    return (
+      <Content class="bg-[rgb(25_30_37)] text-[#ebf9ff] py-0  [--line-color:#3b4046] font-light leading-snug">
+        <h1 class="text-5xl mb-4 pt-4">Note</h1>
+        <NoteChildren nodes={p.nodes} class="/-ml-4" />
+      </Content>
+    );
+  };
+
+  function NoteChildren(p: { nodes: Node[]; class?: string }): JSX.Element {
+    return (
+      <>
+        {p.nodes.length > 0 && (
+          <>
+            <ul class={s("list-outside pl-5 pt-1 -mb-1", p.class)}>
+              <For each={p.nodes}>
+                {(n) => (
+                  <li class="relative py-1">
+                    <div class="absolute left-[-18px] text-(--line-color)">•</div>
+                    {/* vertical bar */}
+                    {n.children.length > 0 && (
+                      <div class="absolute left-[-15.25px] w-[1px] top-[15px] h-[calc(100%-7px)] bg-(--line-color)/50" />
+                    )}
+                    <span>{n.text}</span>
+                    <NoteChildren nodes={n.children} />
+                  </li>
+                )}
+              </For>
+            </ul>
+          </>
+        )}
+      </>
+    );
+  }
+})();
+
+const Note2 = (() => {
+  return (p: { nodes: Node[] }) => {
+    return (
+      <Content class="bg-[rgb(25_30_37)] text-[#ebf9ff] py-0  [--line-color:#3b4046] font-light leading-snug">
+        <h1 class="text-5xl mb-4 pt-4">Note 2</h1>
+        <Note2Children nodes={p.nodes} class="-ml-4" level={0} />
+      </Content>
+    );
+  };
+
+  function Note2Children(p: { nodes: Node[]; class?: string; level: number }): JSX.Element {
+    return (
+      <>
+        {p.nodes.length > 0 && (
+          <>
+            <ul class={s("list-outside pl-5 pt-1 -mb-1", p.class)}>
+              <For each={p.nodes}>
+                {(n) => (
+                  <li class="relative py-1">
+                    {p.level > 0 && (
+                      <>
+                        <div class="absolute left-[-18px] text-(--line-color)">•</div>
+                        {/* vertical bar */}
+                        {n.children.length > 0 && (
+                          <div class="absolute left-[-15.25px] w-[1px] top-[15px] h-[calc(100%-7px)] bg-(--line-color)/50" />
+                        )}
+                      </>
+                    )}
+
+                    {p.level === 0 && (
+                      <>
+                        <div class="absolute left-[-18px] text-(--line-color)">•</div>
+                        {/* <div class="absolute left-[-23px] text-(--line-color)">-</div> */}
+                      </>
+                    )}
+
+                    <span>{n.text}</span>
+                    <Note2Children nodes={n.children} level={p.level + 1} />
+                  </li>
+                )}
+              </For>
+            </ul>
+          </>
+        )}
+      </>
+    );
+  }
+})();
+
+const Android = (() => {
+  return (p: { nodes: Node[] }) => {
+    return (
+      <Content class="bg-[rgb(22,26,32)] text-[#ebf9ff] py-0  [--line-color:#3b4046] font-light leading-snug">
+        <h1 class="text-5xl mb-4 pt-4">Android</h1>
+        <AndroidChildren nodes={p.nodes} class="-ml-4" level={0} />
+      </Content>
+    );
+  };
+
+  function AndroidChildren(p: { nodes: Node[]; class?: string; level: number }): JSX.Element {
+    return (
+      <>
+        {p.nodes.length > 0 && (
+          <>
+            <ul
+              class={s(
+                "list-outside pt-1  rounded-l-2xl -mr-4 mt-2 ",
+                p.class,
+                // p.level === 1 && "divide-y divide-[rgb(25_30_37)]",
+                // [0, 2].includes(p.level) && "divide-y divide-[rgb(34,41,50)]",
+              )}
+              data-level={p.level}
+            >
+              <For each={p.nodes}>
+                {(n, i) => (
+                  <li
+                    class={s(
+                      "relative py-1 pl-4 rounded-l-xs pr-4",
+                      p.level % 2 ? "!bg-[rgb(25_30_37)]" : "bg-gray-400/10",
+                      i() === 0 && "rounded-tl-2xl pt-2",
+                      i() === p.nodes.length - 1 && "rounded-bl-2xl pb-2",
+                      i() !== p.nodes.length - 1 && !n.children.length && "mb-[.5px]",
+                    )}
+                  >
+                    <span>{n.text}</span>
+                    <AndroidChildren nodes={n.children} level={p.level + 1} />
+                  </li>
+                )}
+              </For>
+            </ul>
+          </>
+        )}
+      </>
+    );
+  }
+})();
+
+const Apple = (() => {
+  return (p: { nodes: Node[] }) => {
+    return (
+      <Content class="bg-[#1c1c1e] min-h-full text-[#dcdcdc] py-0 font-light">
+        <h1 class="text-5xl mb-4 pt-4">Apple</h1>
+        <AppleChildren
+          nodes={p.nodes}
+          // first level offset
+          class="-ml-2"
+        />
+      </Content>
+    );
+  };
+
+  function AppleChildren(p: { nodes: Node[]; class?: string }): JSX.Element {
+    return (
+      <>
+        {p.nodes.length > 0 && (
+          <>
+            <ul class={s("list-outside pl-2", p.class)}>
+              <For each={p.nodes}>
+                {(n) => (
+                  <li class="relative py-0 pl-3">
+                    <div class="absolute left-0">-</div>
+                    {n.text}
+                    <AppleChildren nodes={n.children} />
+                  </li>
+                )}
+              </For>
+            </ul>
+          </>
+        )}
+      </>
+    );
+  }
+})();
 
 const Views = {
   Clear,
   Clear2,
+  Clear3,
+  Clear4,
+  Clear5,
+  Note,
+  Note2,
+  Android,
   Apple,
 } as const;
 type View = keyof typeof Views;
@@ -132,7 +463,9 @@ const texts1 = [
   new Node("< 5km"),
   new Node("< $100"),
   new Node("popular"),
-  new Node("recommended"),
+  new Node(
+    "recommended lorem ipsum dolor sit amet consectetur adipisicin sit amet consecteturg elit lor amet adipisicing elit",
+  ),
   new Node("just in"),
   new Node("top rated"),
   new Node("movies to watch", [
@@ -145,9 +478,13 @@ const texts1 = [
     ),
     new Node("The office space", [
       new Node("It's about office"),
-      new Node("It's also about space"),
-      new Node("1320+ reviews"),
-      new Node("7.7 IMDb"),
+      new Node("It's also about space", [new Node("nested")]),
+      new Node("1320+ reviews; lorem ipsum dolor sit amet consectetur adipisicing "),
+      new Node("7.7 IMDb", [
+        new Node(
+          "nested lorem ipsum dolor sit amet consectetur adipisicin sit amet consecteturg elit lor amet adipisicing elit",
+        ),
+      ]),
     ]),
     new Node("The champion"),
     new Node("Face off"),
